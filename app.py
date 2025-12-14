@@ -2,8 +2,16 @@ import streamlit as st
 import pandas as pd
 from pymongo import MongoClient
 from datetime import datetime
+import os
+from dotenv import load_dotenv 
 
-connection_string = "mongodb+srv://BALAN_PAUL:stud@mongo.crqvzcq.mongodb.net"
+
+load_dotenv() 
+connection_string = os.getenv("MONGO_URI") 
+
+if not connection_string:
+    st.error("Eroare: Nu am găsit MONGO_URI în fișierul .env")
+    st.stop()
 
 try:
     client = MongoClient(connection_string)
